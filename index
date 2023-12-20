@@ -1,20 +1,26 @@
 #!/bin/sh
-function index {
-    > index.txt
-    for i in $@ ; do
-        unzip -p $i .INFO >> index.txt
-        echo "Path: $i" >> index.txt
-    done
-}
 
 function indexal
 {
-> index.txt
+>index.lst
 find ./* -type f -name *bps |
 	    while IFS= read file_name; do
 	    
-	    	tar -xf ${file_name}
-	    		echo ${file_name:1}>>../> index.txt
-		fi
+	    	tar -xf ${file_name} bpsbuild
+	    	version=$(cat bpsbuild|grep version=)
+	    	version=${version:9:-1}
+	    	name=$(cat bpsbuild|grep name=)
+	    	name=${name:6:-1}
+	    	depends=$(cat bpsbuild|grep depends=)
+	    	depends=${depends:9:-1}
+
+	    	echo "$name:$version:$depends">>index.lst
+		
 	    done
+rm -rf bpsbuild
 }
+indexal
+
+mkdir /output -p
+cp -rf index.lst /output
+
