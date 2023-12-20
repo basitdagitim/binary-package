@@ -1,7 +1,5 @@
 #!/bin/sh
-
-function indexal
-{
+set -ex
 >index.lst
 find ./* -type f -name *bps |
 	    while IFS= read file_name; do
@@ -18,8 +16,7 @@ find ./* -type f -name *bps |
 		
 	    done
 rm -rf bpsbuild
-}
-indexal
+
 
 mkdir /output -p
 cp -rf index.lst /output
