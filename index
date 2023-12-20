@@ -6,11 +6,17 @@ find ./* -type f -name *bps |
 	    
 	    	tar -xf ${file_name} bpsbuild
 	    	version=$(cat bpsbuild|grep version=)
-	    	#version=${version:9:-1}
+	    	#version=$(echo $version | sed 's/.*="\([0-9]*\)\"/\1/')
+	    	version=${version:9:-1}
+	    	
 	    	name=$(cat bpsbuild|grep name=)
-	    	#name=${name:6:-1}
+	    	#name=$(echo $name | sed 's/.*="\([0-9]*\)\"/\1/')
+	    	name=${name:6:-1}
+	    	
 	    	depends=$(cat bpsbuild|grep depends=)
-	    	#depends=${depends:9:-1}
+	    	#depends=$(echo $depends | sed 's/.*="\([0-9]*\)\"/\1/')
+	    	depends=${depends:9:-1}
+	    	
 	    	echo "$name:$version:$depends">>index.lst
 		
 	    done
