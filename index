@@ -19,5 +19,3 @@ rm -rf bpsbuild
 
 mkdir /output -p
 cp -rf index.lst /output
-
-
